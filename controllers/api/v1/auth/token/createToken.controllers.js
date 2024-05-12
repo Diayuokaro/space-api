@@ -6,10 +6,10 @@ import User from '#models/user.models.js'
 import Session from '#models/session.models.js'
 
 export default async (req, res, next) => {
-  switch (req.body.grant_type) {
-    case 'refresh_token': {
+  switch (req.body.grantType) {
+    case 'refreshToken': {
       const accessToken = req.headers.authorization?.replace('Bearer ', ''),
-      { refresh_token: refreshToken } = req.body
+      { refreshToken } = req.body
       if (!accessToken) return res.status(401).json({ message: 'Invalid access token' })
       if (!refreshToken) return res.status(401).json({ message: 'Invalid refresh token' })
 

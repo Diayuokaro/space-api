@@ -18,7 +18,10 @@ export default async (req, res, next) => {
   if (!session || !await bcrypt.compare(accessTokenSignature, session.accessToken)) return res.status(401).json({ message: 'Invalid access token' })
 
   const user = await User.getById(session.user),
-  sessions = await Session.getByUserId(user._id)
+  sess = await Session.getById(req.params.sessionId)
+  if (String(sess.user) !== String(user._id)) return res.status(403).json({ message: 'Forbidden' })
 
-  await res.status(200).json(sessions)
+  const revokedSession = await Session.deleteById(sess._id)
+
+  await res.status(200).json({ message: 'Token revoked succefully' })
 }
