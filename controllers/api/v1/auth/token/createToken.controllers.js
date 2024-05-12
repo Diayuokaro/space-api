@@ -60,8 +60,6 @@ export default async (req, res, next) => {
       if (!username || !password) return res.status(401).json({ message: 'Invalid credentials' })
 
       const user = await User.getByUsername(username)
-      // console.log(await bcrypt.hash(password, 10))
-      // console.log(await bcrypt.compare(password, user.password))
       if (!user || !await bcrypt.compare(password, user.password)) return res.status(401).json({ message: 'Invalid credentials' })
 
       const sessionId = new mongoose.Types.ObjectId(),

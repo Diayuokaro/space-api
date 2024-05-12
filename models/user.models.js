@@ -25,6 +25,12 @@ const modelSchema = new Schema(
 //   return await backend.save()
 // }
 
+modelSchema.statics.getById = async function(_id) {
+  const user = await this.model(modelName).findById(_id)
+
+  return user
+}
+
 modelSchema.statics.getByUsername = async function(username) {
   const user = await this.model(modelName).findOne({ username })
 

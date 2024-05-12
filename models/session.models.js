@@ -99,6 +99,12 @@ modelSchema.statics.getById = async function(_id) {
   return session
 }
 
+modelSchema.statics.getByUserId = async function(user) {
+  const sessions = await this.model(modelName).find({ user })
+
+  return sessions
+}
+
 modelSchema.statics.updateById = async function(_id, query) {
   const session = await this.model(modelName).findByIdAndUpdate(_id, query)
 
